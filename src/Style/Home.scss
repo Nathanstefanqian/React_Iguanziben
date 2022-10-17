@@ -1,0 +1,28 @@
+@import '_List';
+
+@function rem($px) {
+    @return $px / 100+rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+
+    text-decoration: none;
+}
+
+body {
+    background-color: #fbfbfc;
+    height: auto;
+}
+
+.clearfix {
+    height: 48px;
+}
