@@ -1,9 +1,15 @@
-import Home from "./Home/Home"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Home from "./Pages/Home"
+import List from "./Pages/List"
+
 const App = () => {
-    return (
-        <>
-            <Home />
-        </>
-    )
+  return (
+    <>
+      <Routes>
+        <Route exact path="/" element={<Home />}></Route>
+        <Route path="/list" element={<List />}></Route>
+      </Routes>
+    </>
+  )
 }
 export default App
