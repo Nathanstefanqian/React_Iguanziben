@@ -69,11 +69,23 @@ body {
 
 }
 
-#my-tabbar {
-  display: none;
+#home_tabbar {
+  display: flex;
+  flex-direction: row;
+
+  &_move {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    left: 49px;
+    background-color: #3b9cd8;
+    width: 32px;
+    height: 3px;
+  }
 }
 
 .home-tabbar {
+  position: relative;
   width: 390px;
   height: 37px;
   margin-top: 10px;
@@ -88,13 +100,12 @@ body {
   }
 
   &-list {
-    position: relative;
-    left: 1000px;
     box-sizing: border-box;
     width: 390px;
     padding: 10px 20px;
   }
 }
+
 
 .home-swiper-img {
   width: 390px;
@@ -164,6 +175,7 @@ body {
   flex-direction: row;
   height: 30px;
   color: #555;
+  width: 350px;
 
   &::before {
     content: " ";
@@ -177,6 +189,7 @@ body {
   }
 
   span {
+    width: 350px;
     font-size: 14px;
     overflow: hidden;
     white-space: nowrap;

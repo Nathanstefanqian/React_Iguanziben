@@ -19,7 +19,7 @@ const TabNews = () => {
   useEffect(() => void getData(), [])
   return (
     <>
-      <div id="myid-home-tabbar-list" className="home-tabbar-list">
+      <div className="home-tabbar-list">
         {data.map((item, index) => (
           <li className="home-small-list" key={index}>
             {<span>{item.title}</span>}

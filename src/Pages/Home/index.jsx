@@ -83,23 +83,36 @@ const HomeSection = (props) => {
 }
 
 const HomeTabbar = () => {
-  const [id, setId] = useState(1)
+  let id = 1
+  let translatexvalue = 0
+  let translatexvalue_move = 0
   const handleChange = (myid) => {
-    setId(myid)
-    console.log("打印了", id)
-    let mydiv = document.getElementById("myid-home-tabbar-list")
-    mydiv.style.left = 0 + "px"
-    mydiv.style.transition = "all ease 0.5s"
+    if (id === myid) return;
+    let mydiv = document.getElementById("home_tabbar")
+    let mydiv_move = document.getElementById("home_tabbar_move")
+    translatexvalue += (id - myid) * 390
+    translatexvalue_move += (myid - id) * 130
+    mydiv.style.transform = `translatex(${translatexvalue}px)`
+    mydiv_move.style.transform = `translatex(${translatexvalue_move}px)`
 
+    mydiv.style.transition = "all 0.5s"
+    mydiv_move.style.transition = "all 0.5s"
+
+    id = myid
   }
   return (
     <>
       <div className="home-tabbar">
+        <div id="home_tabbar_move"></div>
         <div className="home-tab" onClick={() => handleChange(1)}><span>热点</span></div>
         <div className="home-tab" onClick={() => handleChange(2)}><span>要闻</span></div>
         <div className="home-tab" onClick={() => handleChange(3)}><span>舆情</span></div>
       </div >
-      {id === 1 ? <TabEnts /> : id === 2 ? <TabHits /> : <TabNews />}
+      <div id="home_tabbar">
+        <TabEnts />
+        <TabHits />
+        <TabNews />
+      </div>
 
     </>
   )
@@ -173,7 +186,7 @@ const Home = () => {
       <div className="clearfix"></div>
       <HomeSwiper />
       <HomeTabbar />
-      {channel_id.map((item, index) => <HomeSection item={item} />)}
+      {channel_id.map((item, index) => < HomeSection item={item} />)}
       <HomeFooter />
     </>
   )
