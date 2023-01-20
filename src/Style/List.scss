@@ -1,0 +1,49 @@
+@function rem($px) {
+  @return $px / 100+rem;
+}
+
+.list-layout {
+  box-sizing: border-box;
+  width: rem(390);
+  padding: 0 rem(20);
+}
+
+.List-item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  width: rem(348);
+  height: rem(104);
+  padding-top: rem(10);
+
+  img {
+    min-width: rem(115);
+    height: rem(84);
+    margin-right: rem(10);
+  }
+
+  &-detail {
+    overflow: hidden;
+
+    h4 {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      height: rem(29);
+      line-height: rem(29);
+      font-size: rem(13.8);
+      color: #000;
+    }
+
+    p {
+      font-size: rem(13);
+      line-height: rem(19);
+      height: rem(56.7);
+      overflow: hidden;
+      color: #8a8d99;
+      text-indent: 2em;
+    }
+
+  }
+
+}

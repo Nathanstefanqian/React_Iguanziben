@@ -1,0 +1,39 @@
+.loading-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .7);
+  z-index: 21;
+  cursor: pointer;
+  z-index: 30;
+  width: rem(390);
+  height: 100%;
+}
+
+.loading-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  width: rem(100);
+  height: rem(100);
+  margin-top: -rem(50);
+  margin-left: -rem(50);
+  top: 43%;
+  left: 38%;
+  background: rgba(0, 0, 0, .3);
+
+  span {
+    margin-top: rem(10);
+    font-size: rem(16);
+    color: rgba(255, 255, 255, .7);
+  }
+
+}
+
+.loading {
+  z-index: 31;
+}

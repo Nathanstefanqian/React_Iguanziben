@@ -1,34 +1,20 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useParams, Link } from "react-router-dom";
+import Header from '../../Components/getApi/Header';
 import axios from 'axios'
+import Loadings from '../../Components/getApi/Loadings';
+import { PullDownRefresh } from 'tdesign-mobile-react';
 
-const ListHeader = () => {
-  return (
-    <>
-      <div className="List-Header">
-        <div className="List-Header-Back"></div>
-        <h2>地产</h2>
-        <div className="List-Header-Menu"></div>
-      </div>
-      <div className="clearfix"></div>
-    </>
-  )
-}
 
 const List = () => {
-
+  const params = useParams()
+  const { id } = params
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [pages, setPages] = useState(0)
 
-  const prePages = () => {
-    setPages(pages => pages - 1)
-    getData()
-  }
+  console.log(id)
 
-  const nextPages = () => {
-    setPages(pages => pages + 1)
-    getData()
-  }
 
   const getData = useCallback(async () => {
     setLoading(true)
@@ -36,40 +22,67 @@ const List = () => {
       url: '/api/v1/channel_article',
       params: {
         status: 'NORMAL',
-        channel_id: 41,
+        channel_id: `${id}`,
         page: pages
       }
     })
-    setData(res.data.data.list)
+    console.log(11111, id)
+
+    setData([...data, res.data.data.list])
     setLoading(false)
-  }, [pages])
-
-  useEffect(() => void getData(), [])
-
-  if (loading) return <div className="list">Loading</div>
-  if (data.length === 0) return <div className="list">No Data</div>
+  }, [id])
+  useEffect(() =>
+    setPages(pages => pages + 1), []
+  )
+  useEffect(() => {
+    void getData()
+    console.log(data, " id ", id)
+  }, [pages, id])
+  window.onscroll = function () {
+    let scrollTop = document.documentElement.scrollTop
+    console.log("scrolltop", scrollTop)
+    let innerHeight = window.innerHeight
+    console.log("innerHeight", innerHeight)
+    let clientHeight = document.body.clientHeight
+    console.log("clientHeight", clientHeight)
+    if (scrollTop + innerHeight >= clientHeight - 3) {
+      setPages(pages => pages + 1)
+      console.log("完成更新")
+    }
+  }
 
   return (
     <>
-      <ListHeader />
-      <div className="List-long">
-        {data.map((item, index) => (
-          <a href='#'>
-            <div className="List-item" key={index}>
-              {item.img && <img src={item.img} alt={item.title} />}
-              <div className='List-item-detail'>
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-              </div>
+      <Header url={"channel"} id={id} />
+      <div className="clearfix">
+        {
+          loading && (pages === 0 || 1) ? <Loadings /> : null
+        }
+      </div>
+      <div className="list-layout">
+        {
+          data.map((item, index) => (
+            <div key={index}>
+              {
+                item.map((subitem, subindex) => (
+                  <Link to={`/article/${subitem.id}`} key={subindex}>
+                    <div className="List-item" >
+                      {subitem.img && <img src={subitem.img} alt={subitem.title} />}
+                      <div className='List-item-detail'>
+                        <h4>{subitem.title}</h4>
+                        <p>{subitem.description}</p>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              }
             </div>
-          </a>
-        ))}
-        <button onClick={prePages} >上一页</button>
-        <button onClick={nextPages} >下一页</button>
+          ))
+        }
       </div>
     </>
-
   )
+
 }
 
 export default List

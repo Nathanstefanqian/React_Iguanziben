@@ -7,15 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="http://iguanziben.com/favicon.ico" type="image/x-icon" />
   <title>观资本网</title>
-  <script src="../src/Utils/common.js"></script>
-
+  <script>
+    function set_html_fontsize() {
+      var width = document.body.clientWidth
+      console.log(width)
+      width = width > 720 ? 390 : width
+      document.getElementsByTagName("html")[0].style.cssText = 'font-size: ' + width * 100 / 390 + "px;"
+    }
+    window.orientationchange = () => set_html_fontsize()
+    window.onresize = () => set_html_fontsize()
+    window.onload = () => set_html_fontsize() 
+  </script>
 </head>
 
 <body>
   <div class="naq-mobile-frame">
     <div id="root"></div>
   </div>
-
 </body>
 
 </html>

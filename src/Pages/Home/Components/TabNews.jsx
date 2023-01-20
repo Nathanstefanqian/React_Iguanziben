@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 const TabNews = () => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
@@ -20,11 +21,15 @@ const TabNews = () => {
   return (
     <>
       <div className="home-tabbar-list">
-        {data.map((item, index) => (
-          <li className="home-small-list" key={index}>
-            {<span>{item.title}</span>}
-          </li>
-        ))}
+        {
+          data.map((item, index) => (
+            <Link to={`/article/${item.id}`} key={index} >
+              <li className="home-small-list" key={index}>
+                {<span>{item.title}</span>}
+              </li>
+            </Link>
+
+          ))}
       </div>
     </>
   )

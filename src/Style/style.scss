@@ -1,0 +1,28 @@
+// 颜色变量
+@import "base/color";
+// Mixin 混入
+@import "base/mixin";
+// 浏览器重置
+@import "base/reset";
+// 基础样式
+@import "base/base";
+// 表单样式
+@import "base/input";
+@import "base/mobile";
+
+//元素样式
+@import "./Home.scss";
+@import "./Article.scss";
+@import "./List.scss";
+@import "./Loading.scss";
+@import "./User.scss";
+
+.naq-mobile-frame {
+  margin: 0 auto;
+  width: rem(390);
+  overflow: hidden;
+}
+
+#root {
+  position: relative;
+}

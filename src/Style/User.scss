@@ -1,0 +1,79 @@
+.user-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: rem(750);
+  background-color: #fbfbfc;
+
+  &-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: rem(208);
+    height: rem(131);
+    font-size: rem(16);
+    color: #000;
+    margin-bottom: rem(26);
+
+    &:before {
+      content: "";
+      display: block;
+      width: rem(208);
+      height: rem(104);
+      margin-bottom: rem(10);
+      background: url(http://www.iguanziben.com/user/image/logo.png) 50%/contain no-repeat;
+    }
+  }
+
+  &-content {
+    width: rem(322);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8%;
+
+    &-cell {
+      position: relative;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      width: rem(320);
+      height: rem(44);
+      padding: rem(10) rem(16);
+
+      input {
+        position: relative;
+        border: 0;
+        width: 100%;
+        height: 100%;
+        outline: 0;
+        font-size: rem(16);
+      }
+
+    }
+
+    &-button-cell {
+      width: rem(290);
+      height: rem(44);
+      padding: rem(10) rem(16);
+      font-size: rem(15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      background-color: #fff;
+
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #4187f2;
+      width: rem(290);
+      height: rem(44);
+    }
+  }
+}

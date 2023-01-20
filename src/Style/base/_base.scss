@@ -1,0 +1,19 @@
+// base by fungleo
+html {background:$cf9;font-size: 100px;height:100%;}
+body {color: $c55;line-height: 1;margin-left: auto;margin-right: auto;font-size: rem(12);height:100%;}
+body,button, input, select, textarea {font-family:tahoma,Helvetica, Arial,"\5FAE\8F6F\96C5\9ED1";}
+
+.block {display: block;}
+.none {display:none}
+.clear {clear: both;}
+
+.fl {float: left;}
+.fr {float: right;}
+.tl {text-align: left;}
+.tr {text-align: right;}
+.tc {text-align: center;}
+.cf{
+  zoom:1;
+  &:before,&:after {content:"";display:table;}
+  &:after {clear:both;}
+}

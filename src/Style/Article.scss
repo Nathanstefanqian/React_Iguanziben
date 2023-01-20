@@ -1,0 +1,45 @@
+#article {
+  &_title {
+    width: rem(358);
+    line-height: rem(45);
+    color: #2D2E32;
+    margin-bottom: rem(40);
+    font-size: rem(30);
+  }
+
+  &_content {
+    box-sizing: border-box;
+    width: rem(358);
+    padding: rem(5) rem(0);
+    font-size: rem(16);
+    line-height: rem(35);
+    text-indent: 2em;
+    color: #000;
+
+    a {
+      color: red;
+    }
+
+    img {
+      display: block;
+      width: rem(358);
+      margin: rem(5) rem(2);
+    }
+  }
+
+  &_date {
+    box-sizing: border-box;
+    font-size: rem(16);
+    line-height: rem(25);
+    width: rem(358);
+    padding: 30px 0;
+    color: #8a8d99;
+    font-weight: 200;
+  }
+}
+
+.article-layout {
+  box-sizing: border-box;
+  width: rem(390);
+  padding: rem(15);
+}

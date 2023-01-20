@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 const TabEnts = () => {
   const [data, setData] = useState([])
@@ -22,11 +23,15 @@ const TabEnts = () => {
     <>
       <div className="home-tabbar-list">
         {data.map((item, index) => (
-          <li className="home-small-list" key={index}>
-            {<span>{item.title}</span>}
-          </li>
-        ))}
-      </div>
+          <Link to={`/article/${item.id}`} key={index}>
+            <li className="home-small-list"  >
+              {<span> {item.title}</span>}
+            </li>
+          </Link>
+
+        ))
+        }
+      </div >
     </>
   )
 }
