@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import { Carousel, Input } from 'antd';
-import { Link, useAsyncValue, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TabEnts from "./Components/TabEnts"
 import TabHits from "./Components/TabHits"
 import TabNews from "./Components/TabNews"
@@ -10,30 +10,24 @@ import Loadings from "../../Components/getApi/Loadings";
 const { Search } = Input;
 const rem = px => px / 100;
 
-
 const HomeSection = (props) => {
-  const { item, index, isLoading } = props;
+  const { item, index, addCount } = props;
   const [Headlist, setHeadlist] = useState([])
   const [name, setName] = useState([])
   const [list, setList] = useState([])
-  const getName = useCallback(async () => {
-    isLoading(true)
+  const getData = useCallback(async () => {
     let res = await getApi(`channel/${item}`, {})
     setName(res.data.data.name)
-  }, [])
-  const getHeadlist = useCallback(async () => {
-    let res = await getApi("channel_article", { channel_id: item, status: "NORMAL", type: "RECOMMEND" })
+    res = await getApi("channel_article", { channel_id: item, status: "NORMAL", type: "RECOMMEND" })
     setHeadlist(res.data.data.list[0])
-  }, [])
-  const getList = useCallback(async () => {
-    let res = await getApi("channel_article", { channel_id: item, status: "NORMAL", pageSize: 5 })
+    res = await getApi("channel_article", { channel_id: item, status: "NORMAL", pageSize: 5 })
     setList(res.data.data.list)
-    isLoading(false)
+    addCount()
+    console.log("调用2次")
   }, [])
+
   useEffect(() => {
-    void getName()
-    void getHeadlist()
-    void getList()
+    void getData()
   }, [])
 
   return (
@@ -94,7 +88,7 @@ const HomeTabbar = () => {
   return (
     <>
       <div className="home-tabbar">
-        <div id="home_tabbar_move" style={{ left: '10px' }}></div>
+        <div id="home_tabbar_move"></div>
         <div className="home-tab" onClick={() => handleChange(1)}><span id="home_tab_span1">热点</span></div>
         <div className="home-tab" onClick={() => handleChange(2)}><span id="home_tab_span2">要闻</span></div>
         <div className="home-tab" onClick={() => handleChange(3)}><span id="home_tab_span3">舆情</span></div>
@@ -110,15 +104,15 @@ const HomeTabbar = () => {
 }
 
 const HomeSwiper = (props) => {
-  const { isLoading } = props
+  const { addCount } = props
   const [data, setData] = useState([])
-  const getres = useCallback(async () => {
-    isLoading(true)
+  const getData = useCallback(async () => {
     let res = await getApi("article", { type: 'FOCUS', pageSize: 5 })
     setData(res.data.data.list)
-    isLoading(false)
+    addCount()
+    console.log("调用1次")
   }, [])
-  useEffect(() => void getres(), [])
+  useEffect(() => void getData(), [])
   return (
     <>
       <Carousel Carousel autoplay>
@@ -190,18 +184,28 @@ const HomeHeader = () => {
 const Home = () => {
   const channel_id = ["47", "40", "41", "42", "44", "45", "46", "48"];
   const [loading, setLoading] = useState(false)
-  const isLoading = (val) => {
-    setLoading(val);
+  let count = 0
+  const addCount = () => {
+    count += 1
+    if (count === 18) {
+      setLoading(false)
+      count = 0
+      return;
+    }
+    setLoading(true)
   }
+
   return (
     <>
       <HomeHeader />
       <div className="clearfix"></div>
-      <HomeSwiper isLoading={isLoading} />
+      <HomeSwiper addCount={addCount} />
       <HomeTabbar />
-      {channel_id.map((item, index) => < HomeSection item={item} key={index} isLoading={isLoading} />)}
+      {channel_id.map((item, index) => < HomeSection item={item} key={index} addCount={addCount} />)}
       <Footer />
-      {loading ? <Loadings /> : null}
+      {
+        loading ? <Loadings /> : null
+      }
     </>
   )
 }

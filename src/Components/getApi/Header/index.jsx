@@ -6,19 +6,21 @@ const { Search } = Input;
 
 
 const Header = (props) => {
-  const { id, url, name } = props
+  let { id, name, url } = props
   let navigate = useNavigate()
   const [data, setData] = useState([])
-  const getData = useCallback(async () => {
+  const getData = useCallback(async (thisid) => {
+    console.log("id为", thisid)
     let res = await axios({
-      url: `/api/v1/${url}/${id}`
+      url: `/api/v1/${url}/${thisid}`
     })
     setData(res.data.data)
   }, [])
   useEffect(() => {
-    if (!name) void getData()
-  }, [])
-
+    if (!name) {
+      void getData(id)
+    }
+  }, [id])
   const showMenu = () => {
     let menu = document.querySelector(".home-header-menu-layout")
     menu.classList.add("show")
@@ -50,16 +52,16 @@ const Header = (props) => {
             <Search className="home-input" placeholder="请输入关键词" enterButton onSearch={goSearch} />
           </section>
           <ul>
-            <Link to="/user/login"><li>会员中心</li></Link>
-            <Link to="/"><li>首页</li></Link>
-            <Link to="/channel/47"><li>政经</li></Link>
-            <Link to="/channel/40"><li>公司</li></Link>
-            <Link to="/channel/41"><li>地产</li></Link>
-            <Link to="/channel/42"><li>科技</li></Link>
-            <Link to="/channel/44"><li>金融</li></Link>
-            <Link to="/channel/45"><li>民生</li></Link>
-            <Link to="/channel/46"><li>环保</li></Link>
-            <Link to="/channel/48"><li>产经</li></Link>
+            <Link to="/user/login"><li onClick={() => hideMenu()}>会员中心</li></Link>
+            <Link to="/"><li onClick={() => hideMenu()}>首页</li></Link>
+            <Link to="/channel/47"><li onClick={() => hideMenu()}>政经</li></Link>
+            <Link to="/channel/40"><li onClick={() => hideMenu()}>公司</li></Link>
+            <Link to="/channel/41"><li onClick={() => hideMenu()}>地产</li></Link>
+            <Link to="/channel/42"><li onClick={() => hideMenu()}>科技</li></Link>
+            <Link to="/channel/44"><li onClick={() => hideMenu()}>金融</li></Link>
+            <Link to="/channel/45"><li onClick={() => hideMenu()}>民生</li></Link>
+            <Link to="/channel/46"><li onClick={() => hideMenu()}>环保</li></Link>
+            <Link to="/channel/48"><li onClick={() => hideMenu()}>产经</li></Link>
           </ul>
         </nav>
         <div className="header-menu-mask" onClick={() => hideMenu()}>

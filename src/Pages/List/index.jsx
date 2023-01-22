@@ -2,19 +2,18 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, Link } from "react-router-dom";
 import Header from '../../Components/getApi/Header';
 import axios from 'axios'
+import Footer from "../../Components/getApi/Footer"
 import Loadings from '../../Components/getApi/Loadings';
-import { PullDownRefresh } from 'tdesign-mobile-react';
 
 
 const List = () => {
   const params = useParams()
-  const { id } = params
+  let { id } = params
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [pages, setPages] = useState(0)
-
-  console.log(id)
-
+  const [myid, setMyid] = useState(0)
+  if (myid === 0) setMyid(id)
 
   const getData = useCallback(async () => {
     setLoading(true)
@@ -26,37 +25,32 @@ const List = () => {
         page: pages
       }
     })
-    console.log(11111, id)
 
-    setData([...data, res.data.data.list])
+    if (id === myid)
+      setData([...data, res.data.data.list])
+    else {
+      setData([])
+      setData(data => [...data, res.data.data.list])
+      setMyid(id)
+    }
     setLoading(false)
-  }, [id])
-  useEffect(() =>
-    setPages(pages => pages + 1), []
-  )
-  useEffect(() => {
-    void getData()
-    console.log(data, " id ", id)
-  }, [pages, id])
+  })
+  useEffect(() => void getData(), [pages, id])
   window.onscroll = function () {
     let scrollTop = document.documentElement.scrollTop
-    console.log("scrolltop", scrollTop)
     let innerHeight = window.innerHeight
-    console.log("innerHeight", innerHeight)
     let clientHeight = document.body.clientHeight
-    console.log("clientHeight", clientHeight)
     if (scrollTop + innerHeight >= clientHeight - 3) {
       setPages(pages => pages + 1)
-      console.log("完成更新")
     }
   }
 
   return (
     <>
-      <Header url={"channel"} id={id} />
+      <Header url={"channel"} id={myid} />
       <div className="clearfix">
         {
-          loading && (pages === 0 || 1) ? <Loadings /> : null
+          loading && (pages === 1) ? <Loadings /> : null
         }
       </div>
       <div className="list-layout">
@@ -80,6 +74,8 @@ const List = () => {
           ))
         }
       </div>
+      {loading ? <div className="list-footer">加载中...</div> : <div className="list-footer">没有更多了</div>}
+      <Footer />
     </>
   )
 
